@@ -1,10 +1,11 @@
 # C lab
 zadania z Języków i metod programowania rok 2017/2018
+
 prowadzączy dr. inż. Jacek Piwowarczyk
 
 wszyskie rozwiązania są udostępnione na licencji  GNU/GPL
 
-#Lista zadań
+## Lista zadań
 
 |lab-1             | zajęcia z dnia 11.10.2017
 |------------------|--------------------------
