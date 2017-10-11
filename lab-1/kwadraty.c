@@ -6,7 +6,7 @@
 #include <math.h>
 
 float delta(float a,float b, float c){
-    return b*b-4*a*b;
+    return b*b-4*a*c;
 }
 
 int ileRozwZdelt(float delta){
