@@ -8,7 +8,7 @@ wszyskie rozwiązania są udostępnione na licencji  GNU/GPL
 
 |lab-1             | zajęcia z dnia 11.10.2017
 |------------------|--------------------------
-| lab-1/kwadraty.c | Program przeliczający temperaturę podaną w stopniach Fahrenheita na stopnie Celsjusza i odwrotnie.
-| lab-1/bmi.c      | Program obliczający współczynnik BMI.
-| lab-1/temp.c     | Program przeliczający temperaturę podaną w stopniach Fahrenheita na stopnie Celsjusza i odwrotnie.
+| kwadraty.c | Program przeliczający temperaturę podaną w stopniach Fahrenheita na stopnie Celsjusza i odwrotnie.
+| bmi.c      | Program obliczający współczynnik BMI.
+| temp.c     | Program przeliczający temperaturę podaną w stopniach Fahrenheita na stopnie Celsjusza i odwrotnie.
 
