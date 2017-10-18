@@ -1,16 +1,9 @@
 #include <stdio.h>
 
 int main(){
-	//const int N =3;
-	//const int K =4;
-	
-	int N,K;
-	
-	printf("N=");
-	scanf("%i",&N);
-	printf("K=");
-	scanf("%i",&K);
-	
+	const int N =3;
+	const int K =4;
+
 	int sum =0;
 	
 	for(int i=0;i<N;i++)

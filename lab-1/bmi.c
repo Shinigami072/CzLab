@@ -10,11 +10,9 @@ float getBMI(float masa,float wzrost)
 int main(void){
     float masa=0.0f;
     float wzrost = 0.0f;
-
     printf("Kalkulator BMI:\n");
     printf("wzrost w m:\n");
     scanf("%f",/*to jest potrzebne bo tak->*/&wzrost);
-
     printf("masa w kg:\n");
     scanf("%f",/*to jest potrzebne bo tak->*/&masa);
 

@@ -7,11 +7,11 @@ int main(){
 	float x;
 	float n;
 	
-	printf("x=")
+	printf("x=");
 	scanf("%f",x);
-	printf("n=")
+	printf("n=");
 	scanf("%f",n);
 	
-	printf("x=%f n=%f f=%f",x,n,((f(x+n)-f(x))/n))
+	printf("x=%f n=%f f=%f",x,n,((f(x+n)-f(x))/n));
 	return 0;
 }
