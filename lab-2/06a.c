@@ -51,10 +51,8 @@ int main(){
 		printf("\n|");
 		for(int i=0;i<7;i++){
 			if(--dzien<=0 && d <=31){
-				if(d>=10)
-					printf("%i|",d++);
-				else
-					printf(" %i|",d++);}
+					printf("%2i|",d++);
+				}
 			else
 				printf("  |");
 		}
