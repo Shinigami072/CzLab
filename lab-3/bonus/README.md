@@ -4,4 +4,5 @@
 | 2a.c| kółko i krzyżyk wersja elementarna
 | 2b.c| kółko i krzyżyk wersja podstawowa bez pytania o ponowne rozegranie
 | 2c.c| kółko i krzyżyk wersja zaawansowana wersja A
+| 2d.c| kółko i krzyżyk wersja zaawansowana wersja B
 
