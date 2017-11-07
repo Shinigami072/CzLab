@@ -2,13 +2,18 @@
 #include<stdlib.h>
 
 
-double** allocMem(double **A,int m,int n){
+double** allocMem(int m,int n){
 	//przypisanie pamięci
-	A = (double **)malloc(sizeof(double *)*m);//przypisujemy pamięć na tablicę pointerów(tablic)
+	double **A = (double **)malloc(sizeof(double *)*m);//przypisujemy pamięć na tablicę pointerów(tablic)
 	A[0] = (double *)malloc(sizeof(double)*n*m);//przypisyjemy pamięć na double
 	for (int i=1; i<m; i++)
 		A[i] = A[0] + i*n; //przypisujemy odpowiednie tablice odpowiednim indexom
 	return A;
+}
+
+void freeMem(double **A){
+	free(*A);//zwolnienie pamięci matrycy A
+	free(A);
 }
 
 double** initMatrix(double **A,int m,int n){//Funkcja testowa, przyporządkowywuje kolejnym elementom matrycy warośc ichindexu
@@ -19,10 +24,10 @@ double** initMatrix(double **A,int m,int n){//Funkcja testowa, przyporządkowywu
 	return A;
 }
 
-double** readMatrix(double **A,int* m,int* n){//wczytanie matrycy ze std in
-	scanf("%d %d",m,n);//wczytanie jej rozmiarów
+double** readMatrix(int* m,int* n){//wczytanie matrycy ze std in
+	scanf("%d %d",m,n);//wczytanie jej rozmiarów TODO: naprawić pomulone koordynaty macierzy
 
-	A=allocMem(A,*m,*n);//przypisanie pamięci
+	double **A=allocMem(*m,*n);//przypisanie pamięci
 	for (int i = 0; i < *m; i++)//wczytanie wartości z stdin
 		for (int j = 0; j < *n; j++){
 			scanf("%lf", (A[i]+j));//pokazanie pointera na odpowiedni element tablicy
@@ -44,9 +49,8 @@ double getMatrixValue(double **A,double **B,int aY,int row,int column){//oblicze
 		value+=A[row][i]*B[i][column];//dodanie kolenjnego mnożenia elementu rzędu A i kolumny rzędu B
 	return value;
 }
-double **matrixMultiply(double **A,double **B,int aX,int aY,int bY){//funkja liczącamnożenie macieży
-	double **C;
-	C = allocMem(C,aX,bY);//deklaracja pamięci na nową macierz
+double **matrixMultiply(double **A,double **B,int aX,int aY,int bY){//funkja licząca mnożenie macieży
+	double **C = allocMem(aX,bY);//deklaracja pamięci na nową macierz
 
 	for(int i=0;i<aX;i++)
 		for(int j=0;j<bY;j++){
@@ -60,30 +64,25 @@ int main(){
 
 
 	int m =1,n =3,o=4;
-	double **A;
-	double **B;
+
 	double **C;
 
-	A = readMatrix(A,&m,&n);//pobranie i wyswietlenie matrycy A
-	printf("A\n");
+	double **A = readMatrix(&m,&n);//pobranie i wyswietlenie matrycy A
+	printf("A[%dx%d]\n",m,n);
 	displayMatrix(A,m,n);
 
-	B = readMatrix(B,&n,&o);//pobranie i wyświetlenie matrycy B
-	printf("B\n");
+	double **B = readMatrix(&n,&o);//pobranie i wyświetlenie matrycy B
+	printf("B[%dx%d]\n",n,o);
 	displayMatrix(B,n,o);
 
-	printf("A*B\n");//obliczenie i wyświetlenie matrycy A*B
+	printf("A*B[%dx%d]\n",m,o);//obliczenie i wyświetlenie matrycy A*B (pomyliłem się przy pisaniu i pomyliłem x,y) TODO:rozwiązać ten problem
 	C = matrixMultiply(A,B,m,n,o);
 	displayMatrix(C,m,o);
 
-	free(*A);//zwolnienie pamięci matrycy A
-	free(A);
 
-	free(*B);//zwolnienie pamięci matrycy A
-	free(B);
-
-	free(*C);//zwolnienie pamięci matrycy A
-	free(C);
+	freeMem(A);
+	freeMem(B);
+	freeMem(C);
 	return 0;
 }
 
