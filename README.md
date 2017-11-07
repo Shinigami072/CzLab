@@ -5,6 +5,7 @@ prowadzączy dr. inż. Jacek Piwowarczyk
 
 wszyskie rozwiązania są udostępnione na licencji  GNU/GPL
 
+dodatkowo w katalogu bonus-programy znajdują sie programy niezwiązane z zadaniami
 ## Lista zadań
 
 |lab-1             | zajęcia z dnia 11.10.2017
