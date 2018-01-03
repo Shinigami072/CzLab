@@ -20,9 +20,16 @@
 
 int main(int argc,char const **argv){
 	int sum =0;
+    char *c;
 	for (int i=1;i<argc;i++)
 	{
-		sum+=strtol(argv[i],NULL,10);
+        int j =strtol(argv[i],&c,10);
+        if(j ==0 && argv[i]==c)
+        {
+            printf("BŁĄD - nieporawny numer: %s %s\n",argv[i],c);
+            return -1;
+        }
+        sum+=j;
 	}
 	printf("suma: %d\n",sum);
 }

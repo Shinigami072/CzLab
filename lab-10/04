@@ -1,0 +1,65 @@
+#INCLUDE<STDIO.H>
+#INCLUDE<STDLIB.H>
+#INCLUDE<STRING.H>
+#INCLUDE<CTYPE.H>
+
+#DEFINE buffer 1024
+
+INT MAIN(INT ARGC,CHAR CONST **ARGV){
+	file *IN;
+	file *OUT;
+	ENUM cONVERTtYPE {none,upper,lower,swap};
+	
+	ENUM cONVERTtYPE C = none;
+	CHAR B[buffer];
+	FOR(INT I=1;I<ARGC;I++){
+		IF(ARGV[I][0]=='-'){
+			
+			FOR(INT J=1;ARGV[I][J] != '\0';J++)
+				SWITCH(ARGV[I][J]){
+					CASE 'U':
+						C=upper;
+					BREAK;
+					CASE 'L':
+						C=lower;
+					BREAK;
+					CASE 'R':
+						C=swap;
+					BREAK;
+				}
+				
+		}
+		
+		ELSE IF(IN == null)
+			IN=FOPEN(ARGV[I],"R");
+		ELSE
+			OUT=FOPEN(ARGV[I],"W");
+			
+	}
+	
+	WHILE(FGETS(B,buffer,IN)){
+		FOR(INT I=0; B[I]!='\0' && I<buffer;I++){
+		SWITCH(C){
+			CASE upper:
+				B[I]=TOUPPER(B[I]);
+			BREAK;
+			CASE lower:
+				B[I]=TOLOWER(B[I]);
+			BREAK;
+			CASE swap:
+				IF(ISLOWER(B[I]))
+					B[I]=TOUPPER(B[I]);
+				ELSE
+					B[I]=TOLOWER(B[I]);
+			BREAK;
+			CASE none:
+			BREAK;
+		}
+	}
+		PRINTF("%S",B);
+		FPRINTF(OUT,"%S",B);
+	}
+	RETURN 0;
+
+
+}
