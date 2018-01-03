@@ -1,5 +1,3 @@
-#include<stdlib.h>
-#include<stdio.h>
 /*
  * =====================================================================================
  *
@@ -8,7 +6,7 @@
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  04/12/17 23:20:05
+ *        Created:  12/12/17 18:16:08
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -17,35 +15,75 @@
  *
  * =====================================================================================
  */
-typedef union{
-int date[6];
-struct {
-int year;
-int month;
-int day;
-int hour;
-int min;
-int sec;
-}d;
-}Date;
+#include<stdlib.h>
+#include<stdio.h>
+#include<math.h>
+#define MIN(a,b) (((a)<(b))?(a):(b))
+#define MAX(a,b) (((a)>(b))?(a):(b))
 
-void printD(Date d){
-printf("%02d:%02d:%02d %02d/%02d/%d",d.d.hour,d.d.min,d.d.sec,d.d.day,d.d.month,d.d.year);
+int ** allocTable(int length){
+	int **table = malloc(sizeof(int *)*length);
+	
+	if(!table)
+		return NULL;
+	
+	for(int i=0;i<length;i++){
+		table[i]=malloc(sizeof(int)*(length-i));
+		if(!table[i])
+			return NULL;
+	}
+	return table;
+}
+void printTable(int **table,int length){
+	
+	printf("Tabela [%d:%d]\n",length,length);
+
+	for(int i=0;i<length;i++)
+	{
+		printf("[");
+		for(int j=i;j>0;j--)
+		printf("      ");
+		for(int j=i;j<length-1;j++)
+			printf("%4d, ",table[i][j-i]);
+		printf("%4d]\n",table[i][length-1-i]);
+	}		
+}
+void initTable(int **table,int xp,int xk,int yp,int yk){
+	for(int j=0;j<=yk-yp;j++)
+	for(int i=j;i<=xk-xp;i++)
+		table[j][i-j]=(xp+i)*(yp+j);
+}
+int getTableVal(int **table,int x,int y,int xp,int yp){
+	int i = MIN(x-xp,y-yp);
+	int j = MAX(x-xp,y-yp);
+ 
+	return table[i][j-i];
+}
+int main(){
+	int xp,xk, yp,yk;
+	scanf("%d %d %d",&xp,&xk,&yp);
+	yk = (xk-xp)+yp;
+	int length = xk-xp+1;
+
+	int ** table = allocTable(length);
+
+	if(!table)
+		return -1;
+
+	initTable(table,xp,xk,yp,yk);
+
+	printTable(table,length);
+	int i,j;
+	
+	do{
+	scanf("%d",&i);
+	}while(!(i<=xk && xp<=i));
+	do{
+	scanf("%d",&j);
+	}while(!(j<=yk && yp<=j));
+	printf("%d*%d=%d\n",i,j,getTableVal(table,i,j,xp,yp));
+
+	
+	return 0;
 }
 
-int isEqual(Date a,Date b)
-{
-for(int i=0;i<6;i++)
-	if(a.date[i] != b.date[i])
-		return 0;
-return 1;
-}
-	int
-main ( int argc, char *argv[] )
-{
-	Date d = {2017,10,7,20,44,0};
-	Date b = {2017,10,7,20,44,1};
-	printD(d);
-	printf("%d %d",isEqual(d,d),isEqual(d,b));
-	return EXIT_SUCCESS;
-}				/* ----------  end of function main  ---------- */

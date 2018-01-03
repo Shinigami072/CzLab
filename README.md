@@ -44,3 +44,38 @@ dodatkowo w katalogu bonus-programy znajdują sie programy niezwiązane z zadani
 | 06.c |  liczenie silni rekurencyjnie i iteracyjnie
 |bonus| zadania dodatkowe
 
+|lab-5             | zajęcia z dnia 15.11.2017
+|------------------|--------------------------
+| 01.c |  program zwracający najczęsciej występijący znak w stringu
+| 02.c |  program zwracający ile wspólnych znaków mają stringi
+| 03.c |  deklaracja wektorów i dodawanie
+| 04.c |  długość wektorów
+| 05.c |  wczytanie wektorów, sprawdzenie czy sa równoległe
+| 06.c |  zwrócenie minimalnych i maksymalnych wrtośtości
+| 07.c |  zwrócenie wartości minimalnej
+| 08.c |  sumowanie tablicy
+| 09.c |  selection sort i bubble sort
+
+|lab-6             | zajęcia z dnia 22.11.2017
+|------------------|--------------------------
+| 01.c |  otwarcie plików do zapisu i odczytu, odzczytnie całośći pliku
+| 02.c |  zapisanie i odczytanie matrycy plików
+| 03.c |  wczytanie słów ze słownika
+| 04.c |  wczytanie losowaego słowa
+
+|lab-7             | zajęcia z dnia 29.11.2017 - Struktury, Unie, wskaźniki do nich
+|------------------|--------------------------
+| 01.c |  struktura - punkt
+| 02.c |  odległóść między punktami
+| 03.c |  unia - liczby urojone modyfikowane na 2 sposoby
+| 04.c |  unia i struktura - data
+
+|lab-8             | zajęcia z dnia 6.12.2017 - Allokacja pamięci - kontunuacja
+|------------------|--------------------------
+| 01.c |  allokacja pamięci dla tablicy
+| 02.c |  rozszeżanie tablicy
+| 03.c |  dynamiczne wczytywanie tablic znaków, z użeciem bufora
+| 04.c | tworzenie tabliczki mnożenia
+
+
+

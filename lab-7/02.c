@@ -1,91 +1,73 @@
+/*
+ * =====================================================================================
+ *
+ *       Filename:  02.c
+ *
+ *    Description:  tablica losowych punktów+odlgłość
+ *
+ *        Version:  1.0
+ *        Created:  29/11/17 08:08:35
+ *       Revision:  none
+ *       Compiler:  gcc
+ *
+ *         Author:  Krzysztof Stasiowski (ks), krzys.stasiowski@gmail.com
+ *        Company:  N/A
+ *
+ * =====================================================================================
+ */
 #include<stdlib.h>
 #include<stdio.h>
-#include<string.h>
 #include<time.h>
-#define MAX 20
-int **mallocTab(int i,int j){
-	int **tab= malloc(sizeof(int *)*j);
-	tab[0] = malloc(sizeof(int)*i*j);
-	for(int x=1;x<j;x++)
-		tab[x]=(tab[0]+(x*i));
-	return tab;
-}
-void initTab(int **tab,int i,int j){
-	printf("initTab");
-	for(int y=0;y<j;y++){
-		printf("%d",y);
-		for(int x=0;x<i;x++){
-			printf(" [%d]",x);
-			tab[y][x]=(rand()%MAX);
-			printf(" %d",tab[y][x]);
-		}
-	}
-}
-void fprintTab(FILE *fp,int **tab,int i,int j){
-	fprintf(fp,"%d %d\n",i,j);
-	for(int y=0;y<j;y++){
-		for(int x=0;x<i;x++)
-			fprintf(fp,"%d ",(tab[y][x]));
-		fputc('\n',fp);
-	}
+#include<math.h>
+typedef struct{
+	double x;
+	double y;
+	double z;
+	char nazwa;
+} Point;
+char pointCount = 'A';
 
+void printPoint(Point p){
+	printf("%c(%lf,%lf,%lf)\n",p.nazwa,p.x,p.y,p.z);
 }
-void printTab(int **tab,int i,int j){
-	for(int y=0;y<j;y++)
-	{
-	printf("[");
-	for(int x=0;x<i-1;x++)
-		printf("%d, ",tab[y][x]);
-	printf("%d]\n",tab[y][i-1]);
-	
-	}
-}
-void fscanTab(FILE *fp,int **tab,int *i,int* j){
-	rewind(fp);
-	fscanf(fp,"%d %d",i,j);
-	tab = mallocTab(*i,*j);
-	for(int y=0;y<*j;y++)
-		for(int x=0;x<*i;x++)
-			fscanf(fp,"%d",&tab[y][x]);
 
+Point scanPoint(){
+	Point p = {0.0,0.0,0.0,pointCount++};
+	scanf("%lf %lf %lf\n",&p.x,&p.y,&p.z);
+	return p;
 }
-void freeTab(int **tab){
-	free(*tab);
-	free(tab);
+Point getNext(){
+	double x = (rand()%2? -1.0 : 1.0) * (rand()%1000/100.0);
+	double y = (rand()%2? -1.0 : 1.0) * (rand()%1000/100.0);
+	double z = (rand()%2? -1.0 : 1.0) * (rand()%1000/100.0);
+	Point p ={x,y,z,pointCount++};
+	return p;
 }
-int main(int argc, char ** argv)
+double dist2(Point A,Point B){
+	return pow(A.x-B.x,2.0)+pow(A.y+B.y,2.0)+pow(A.z+B.z,2.0);
+}
+double dist(Point A,Point B){
+	return sqrt(dist2(A,B));
+}
+int main ( int argc, char *argv[] )
 {
-	if(argc-1<3){
-		printf("require 3 arguments\n");
-		return -1;
+	Point origin = {0.0,0.0,0.0,'0'};
+	Point p[30];
+	double min = -1;;
+	int minI =0;
+	srand(time(NULL));
+	for(int i=0;i<30;i++){
+		p[i] = getNext();
+		printPoint( p[i]);
+		double dista = dist(p[i],origin);
+		if(min<0 || min>dista){
+			min=dista;
+			minI=i;
+		}
+		printf("Dist %c = %lf\n",p[i].nazwa,dista);
 	}
-	int i = atoi(argv[2]);
-	int j = atoi(argv[3]);
-	char a[MAX];
-	for(int i=0;i<argc;i++)
-		printf("%d:%s\n",i,argv[i]);
-	
-	FILE * fp = fopen(argv[1],"w");
-	if(fp ==NULL)
-	{
-		printf("unable to open %s",argv[1]);
-		return 1;
-	}
-	int **tb = mallocTab(i,j);
-	printf("malloc\n");
-	srand(time(0));
-	initTab(tb,i,j);
-	printf("initialized\n");
-	fprintTab(fp,tb,i,j);
-	printf("written\n");
-	printTab(tb,i,j);
-	freeTab(tb);
-	fclose(fp);
-	printf("closing\n");
-	
-	fp = fopen(argv[1],"r");
-	printf("reading\n");
-	fscanTab(fp,tb,&i,&j);
-	printTab(tb,i,j);
-	printf("fp closed");
-}
+	printf("najbliżej środka:\n");
+	printPoint(p[minI]);
+	return EXIT_SUCCESS;
+}				/* ----------  end of function main  ---------- */
+

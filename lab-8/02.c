@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  02.c
+ *       Filename:  01.c
  *
- *    Description:  tablica losowych punktów+odlgłość
+ *    Description:  funkcje
  *
  *        Version:  1.0
- *        Created:  29/11/17 08:08:35
+ *        Created:  06/12/17 08:03:27
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -18,56 +18,74 @@
 #include<stdlib.h>
 #include<stdio.h>
 #include<time.h>
-#include<math.h>
-typedef struct{
-	double x;
-	double y;
-	double z;
-	char nazwa;
-} Point;
-char pointCount = 'A';
 
-void printPoint(Point p){
-	printf("%c(%lf,%lf,%lf)\n",p.nazwa,p.x,p.y,p.z);
+int *tabAlloc(int size){
+	return malloc(size*sizeof(int));
 }
+int* tabRealloc(int *tab,int size){
+	return realloc(tab,size*sizeof(int));
+}
+void tabInit(int*tab,int size,int i);
+void tabPrint(int* tab,int size);
+int tabAvg(int *tab,int size);
+int tabMin(int *tab,int size);
 
-Point scanPoint(){
-	Point p = {0.0,0.0,0.0,pointCount++};
-	scanf("%lf %lf %lf\n",&p.x,&p.y,&p.z);
-	return p;
-}
-Point getNext(){
-	double x = (rand()%2? -1.0 : 1.0) * (rand()%1000/100.0);
-	double y = (rand()%2? -1.0 : 1.0) * (rand()%1000/100.0);
-	double z = (rand()%2? -1.0 : 1.0) * (rand()%1000/100.0);
-	Point p ={x,y,z,pointCount++};
-	return p;
-}
-double dist2(Point A,Point B){
-	return pow(A.x-B.x,2.0)+pow(A.y+B.y,2.0)+pow(A.z+B.z,2.0);
-}
-double dist(Point A,Point B){
-	return sqrt(dist2(A,B));
-}
 int main ( int argc, char *argv[] )
 {
-	Point origin = {0.0,0.0,0.0,'0'};
-	Point p[30];
-	double min = -1;;
-	int minI =0;
 	srand(time(NULL));
-	for(int i=0;i<30;i++){
-		p[i] = getNext();
-		printPoint( p[i]);
-		double dista = dist(p[i],origin);
-		if(min<0 || min>dista){
-			min=dista;
-			minI=i;
-		}
-		printf("Dist %c = %lf\n",p[i].nazwa,dista);
+	int size = random()%91+10;
+	int* tab = tabAlloc(size);
+	if(!tab){
+		printf("mallocError");
+		return -1;
 	}
-	printf("najbliżej środka:\n");
-	printPoint(p[minI]);
-	return EXIT_SUCCESS;
-}				/* ----------  end of function main  ---------- */
+	tabPrint(tab,size);
+	tabInit(tab,size,0);
+	tabPrint(tab,size);
+	printf("min=t[%d]=%d , avg=%d\n",tabMin(tab,size),tab[tabMin(tab,size)],tabAvg(tab,size));
+	int* temp;
+	int newsize = size+rand()%10;
+	temp = tabRealloc(tab,newsize);
+	if(!temp)
+	{
+		printf("realocFail");
+		return -2;
+	}
+	tab =temp;
+	tabInit(tab,newsize,size);
+	size = newsize;
 
+	tabPrint(tab,size);
+	printf("min=t[%d]=%d , avg=%d\n",tabMin(tab,size),tab[tabMin(tab,size)],tabAvg(tab,size));
+	return EXIT_SUCCESS;
+
+}	/* ----------  end of function main  ---------- */
+
+int tabMin (int *tab,int size)
+{
+	int min =0;
+	for(int i=1;i<size;i++)
+		if(tab[i]<tab[min])
+			min=i;
+	return min;
+}		/* -----  end of function tabMin  ----- */
+
+int tabAvg (int* tab,int size  )
+{
+	int avg=0;
+	for(int i=0;i<size;i++)
+		avg+=tab[i];
+	return avg/size;
+}		/* -----  end of function tabAvg  ----- */
+
+void tabPrint(int* tab,int size){
+	printf("[");
+	for(int i=0;i<size-1;i++)
+		printf("%2d, ",tab[i]);
+	printf("%2d](%d)\n",tab[size-1],size);
+}
+
+void tabInit(int *tab,int size,int start){
+	for(int i=start; i<size;i++)
+		tab[i]=rand()%100;
+}
